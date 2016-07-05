@@ -26,6 +26,12 @@ for el in events:
   
   map(
     EventConfirmationHandler, 
+    el.urlEncode()+"/participar",
+    dict(event=el)
+  )
+  
+  map(
+    UserConfirmationHandler, 
     el.urlEncode()+"/confirmar",
     dict(event=el)
   )

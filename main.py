@@ -263,6 +263,11 @@ class EventController:
   
   def GET(self):
     ToolbarHandler().load()
+    
+    dbs = sessionmaker(bind=db)()
+    
+    self.event.confirmations = dbs.query(Confirmation).filter(Confirmation.event == self.event)
+    
     return render.eventPage(self.event,"", render)
     
 class EventConfirmationHandler:
@@ -296,7 +301,40 @@ class EventConfirmationHandler:
     raise web.seeother(self.event.urlEncode())
     
 class UserConfirmationHandler:
-  pass
+  event = Event()
+  
+  def POST(self):
+    dbs = sessionmaker(bind=db)()
+    
+    business = dbs.query(Business).filter(Business.id==session.user_id).first()
+    
+    if business == None:
+      raise web.seeother(self.event.urlEncode())
+    
+    if business == self.event.creator:
+      raise web.seeother(self.event.urlEncode())
+    
+    data=postParse(web.data())
+
+    user = dbs.query(User).filter(User.id==data["user_id"]).first()
+
+    if user is None:
+      raise web.seeother(self.event.urlEncode())
+    
+    confirmation = dbs.query(Confirmation).filter(
+      Confirmation.event == self.event,
+      Confirmation.user == user
+    ).first()
+    
+    if confirmation is None:
+      raise web.seeother(self.event.urlEncode())
+    
+    confirmation.checked = True
+    dbs.commit()
+    
+    raise web.seeother(self.event.urlEncode())
+
+
 
 class UserController:
   user = User()

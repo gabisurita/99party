@@ -17,11 +17,31 @@ $def with (inst, warn, render)
       <h4>$inst.location</h4>
       <p>$inst.description</p>
       $if render.user is not None:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="$inst.name/confirmar"> &nbsp; Confirmar presença </a></p>
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/$inst.urlEncode()/participar"> &nbsp; Confirmar presença </a></p>
       $if render.business is not None:
         $if render.business.id == inst.creator.id:
-          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar clientes </a></p>
+          <h2> Clientes Inscritos: </h2>
+          $for el in inst.confirmations:
+            <div class="col-sm-4">
+              <form class="form" method="POST" action="$inst.urlEncode()/confirmar">
+                <label for="user_id" class="sr-only">User id</label>
+                <input type="hidden" name="user_id" value="$el.user.id">
+                <div class="col-sm-6">
+                  <h4>$el.user.name</h4>
+                </div>
+                <div class="col-sm-6">
+                  $if not el.checked:
+                    <button class="btn btn-primary btn-block" type="submit">Confirmar</button>
+                  $else:
+                    <button class="btn btn-primary btn-block" type="submit" disabled>Confirmado</button>
+                </div>
+              </form>
+            </div>
     </div>
     $:render.footer(render)
   </body>
 </html>
+
+
+
+
