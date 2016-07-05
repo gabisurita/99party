@@ -34,16 +34,10 @@ $def with (inst, warn, render)
           <button class="btn btn-primary btn-block" type="submit">Entrar</button>
         </form>
         <br><br>
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/registrar"> &nbsp; Não sou cadastrado </a></p>
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/registrar_empresa"> &nbsp; Cadastrar uma empresa </a></p>
         <p> <i class="fa fa-question-circle fa-lg"></i> <a class="black-link" href="/esqueci"> &nbsp; Esqueci minha senha </a></p>
       </div>
     </div>
-    <footer class="footer">
-      <div class="container">
-        <p class="text-footer text-center">
-         <a class="black-link" href="http://www.github.com/faraj7/gda">
-          Grupo Discente de Avaliação &nbsp; - &nbsp; Conheça este projeto</a> </p>
-      </div>
-    </footer>
+    $:render.footer(render)
   </body>
 </html>

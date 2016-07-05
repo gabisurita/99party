@@ -30,12 +30,6 @@ $def with (inst, warn, render)
         <p> <i class="fa fa-question-circle fa-lg"></i> <a class="black-link" href="/esqueci"> &nbsp; Esqueci minha senha </a></p>
       </div>
     </div>
-    <footer class="footer">
-      <div class="container">
-        <p class="text-footer text-center">
-         <a class="black-link" href="http://www.github.com/faraj7/gda">
-          Grupo Discente de Avaliação &nbsp; - &nbsp; Conheça este projeto</a> </p>
-      </div>
-    </footer>
+    $:render.footer(render)
   </body>
 </html>
