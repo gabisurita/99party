@@ -1,0 +1,26 @@
+$def with (inst, warn, render)
+
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle</title>
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Fixed navbar -->
+    $:render.toolbar(render)
+    <!-- Begin page content -->
+    <div class="container">
+      <h2>$inst.name</h2>
+      <h4>$inst.date</h4>
+      <h4>$inst.location</h4>
+      <p>$inst.description</p>
+      $if render.user is not None:
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar presença </a></p>
+      $if render.business.id == inst.creator.id:
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar clientes </a></p>
+    </div>
+    $:render.footer(render)
+  </body>
+</html>

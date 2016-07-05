@@ -1,0 +1,101 @@
+$def with (render)
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand font-effect-outline" href="/">99 Party</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#">A</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input id="autocomplete" class="form-control" placeholder="Busca" type="text">
+        </div>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        $if render.user is not None:
+          <li><a href="/cliente"> $render.user.name</a></li>
+          <li><a href="/logout">Log Out &nbsp; <i class="fa fa-sign-out"></i></a></li>
+        $elif render.business is not None:
+          <li><a href="/empresa"> $render.business.name</a></li>
+          <li><a href="/logout">Log Out &nbsp; <i class="fa fa-sign-out"></i></a></li>
+        $else:
+          <li><a href="/login"> Login </a></li>
+          <li><a href="/registrar"> Cadastrar </a></li>
+
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<script>
+jQuery.widget( "custom.catcomplete", jQuery.ui.autocomplete, {
+  _create: function() {
+    this._super();
+    this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+  },
+  _renderMenu: function( ul, items ) {
+    var that = this,
+      currentCategory = "";
+    jQuery.each( items, function( index, item ) {
+      var li;
+      if ( item.category != currentCategory ) {
+        ul.append( "<li class='ui-autocomplete-category'> <b>" + item.category  + " </b> </li>" );
+        currentCategory = item.category;
+      }
+      li = that._renderItemData( ul, item );
+      if ( item.category ) {
+        li.attr( "aria-label", item.category + " : " + item.label );
+      }
+    });
+  }
+});
+</script>
+<script>
+   jQuery(document).ready(function() {
+     var accentMap = {
+        "á": "a",
+        "ô": "o"
+      };
+      var normalize = function( term ) {
+        var ret = "";
+        for ( var i = 0; i < term.length; i++ ) {
+          ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+        }
+        return ret;
+      };
+     var data = [
+       $for line in render.businesses:
+         $ name = line.name
+          { label: "$name", url: '/empresas/$name', category: "Empresas"},
+       $for line in render.events:
+         $ name = line.name
+          { label: "$name", url: '/eventos/$name', category: "Eventos"},
+     ];
+    jQuery("input#autocomplete").catcomplete({
+        delay: 100,
+        autoFocus: true,
+        minLength: 3,
+        source: data,
+        source: function( request, response ) {
+          var matcher = new RegExp( "\\b" + jQuery.ui.autocomplete.escapeRegex( request.term ), "i" );
+          response( jQuery.grep( data, function( value ) {
+            value = value.label || value.value || value;
+            return matcher.test( value ) || matcher.test( normalize( value ) );
+          }) );
+        },
+        select: function (event, ui) {
+            window.location = ui.item.url;
+        }
+    });
+});
+ </script>
+

@@ -1,0 +1,41 @@
+$def with (inst, warn, render)
+
+<!DOCTYPE html>
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle - Log In</title>
+
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Begin page content -->
+    <div class="container login">
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4 text-center">
+        <h1 class="font-effect-outline" style="font-size:96px;">99 Party</h1>
+        <br>
+        <form class="form-signin" method="POST" action="/login">
+          <label for="email" class="sr-only">Email</label>
+          <input type="text" class="form-control" placeholder="e-mail" name="email" autofocus>
+          <label for="password" class="sr-only">Senha</label>
+          <input type="password" class="form-control" placeholder="senha" name="password">
+          <br>
+          <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+        </form>
+        <br><br>
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/registrar"> &nbsp; Não sou cadastrado </a></p>
+        <p> <i class="fa fa-question-circle fa-lg"></i> <a class="black-link" href="/esqueci"> &nbsp; Esqueci minha senha </a></p>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-footer text-center">
+         <a class="black-link" href="http://www.github.com/faraj7/gda">
+          Grupo Discente de Avaliação &nbsp; - &nbsp; Conheça este projeto</a> </p>
+      </div>
+    </footer>
+  </body>
+</html>

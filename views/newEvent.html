@@ -1,0 +1,46 @@
+$def with (inst, warn, render)
+
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle - Novo Evento</title>
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Fixed navbar -->
+    $:render.toolbar(render)
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4 text-center">
+        <form class="form-signin" method="POST" action="/criar_evento">
+        <label for="name" class="sr-only">Nome do Evento</label>
+        <input type="text" class="form-control" placeholder="Nome do Evento" name="name">
+          <div class='input-group date' id='datetimepicker1'>
+            <input type='text' placeholder="Data" class="form-control" name="date" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <label for="location" class="sr-only">Localização</label>
+          <input type="text" class="form-control" placeholder="Localização" name="location">
+          <label for="description" class="sr-only">Descrição</label>
+          <input type="text" class="form-control" placeholder="Descrição" name="description">
+
+
+          <br>
+          <button class="btn btn-primary btn-block" type="submit">Criar Evento</button>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $$(function () {
+          $$('#datetimepicker1').datetimepicker();
+      });
+    </script>
+
+    $:render.footer(render)
+  </body>
+  </html>
