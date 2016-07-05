@@ -38,12 +38,13 @@ def map(Inst, URL, attMap={}):
       " ", "_").decode("utf8")+"/", URL)
 
 
-for d in StaticDirs:
-  try:
-    path = os.path.abspath(__file__) + "/" + d
-    app.add_mapping("%s/.+" % d, path)
-  except AttributeError:
-    pass
+def mapStatic(staticDirs):
+    for d in staticDirs:
+      try:
+        path = os.path.abspath(__file__) + "/" + d
+        app.add_mapping("%s/.+" % d, path)
+      except AttributeError:
+        pass
 
   # Test for custom 404
 #def notfound():

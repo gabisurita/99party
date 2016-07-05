@@ -13,6 +13,9 @@ class ToolbarHandler:
   def load(self):
     dbs = sessionmaker(bind=db)()
     
+    if "user_id" not in dir(session):
+        session.user_id=False
+    
     render.user = dbs.query(User).filter(User.id==session.user_id).first()
     render.business = dbs.query(Business).filter(Business.id==session.user_id).first()
     
