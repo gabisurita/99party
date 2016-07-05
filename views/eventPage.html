@@ -17,9 +17,10 @@ $def with (inst, warn, render)
       <h4>$inst.location</h4>
       <p>$inst.description</p>
       $if render.user is not None:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar presença </a></p>
-      $if render.business.id == inst.creator.id:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar clientes </a></p>
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="$inst.name/confirmar"> &nbsp; Confirmar presença </a></p>
+      $if render.business is not None:
+        $if render.business.id == inst.creator.id:
+          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="confirmar"> &nbsp; Confirmar clientes </a></p>
     </div>
     $:render.footer(render)
   </body>

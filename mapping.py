@@ -20,13 +20,19 @@ business = dbs.query(Business)
 for el in events:
   map(
     EventController, 
-    str("/eventos/%s" % el.name.lower().replace(" ","_").encode('utf8')),
+    el.urlEncode(),
+    dict(event=el)
+  )
+  
+  map(
+    EventConfirmationHandler, 
+    el.urlEncode()+"/confirmar",
     dict(event=el)
   )
 
 for el in business:
   map(
     BusinessController, 
-    str("/empresas/%s" % el.name.lower().replace(" ","_").encode('utf8')),
+    el.urlEncode(),
     dict(business=el)
   )

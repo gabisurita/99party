@@ -75,10 +75,10 @@ jQuery.widget( "custom.catcomplete", jQuery.ui.autocomplete, {
      var data = [
        $for line in render.businesses:
          $ name = line.name
-          { label: "$name", url: '/empresas/$name', category: "Empresas"},
+          { label: "$name", url: '$line.urlEncode()', category: "Empresas"},
        $for line in render.events:
          $ name = line.name
-          { label: "$name", url: '/eventos/$name', category: "Eventos"},
+          { label: "$name", url: '$line.urlEncode()', category: "Eventos"},
      ];
     jQuery("input#autocomplete").catcomplete({
         delay: 100,

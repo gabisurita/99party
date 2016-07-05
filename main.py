@@ -27,7 +27,7 @@ class MainController:
 
   def GET(self):
     ToolbarHandler().load()
-    return render.main(None,"",render)
+    return render.mainPage(None,"",render)
 
 
 class LoginController:
@@ -259,24 +259,54 @@ class EventCreatorController:
     raise web.seeother('/')
   
 class EventController:
-  
   event = Event()
   
   def GET(self):
     ToolbarHandler().load()
-    return render.event(self.event,"", render)
+    return render.eventPage(self.event,"", render)
+    
+class EventConfirmationHandler:
+  event = Event()
+  
+  def GET(self):
+    dbs = sessionmaker(bind=db)()
+    
+    user = dbs.query(User).filter(User.id==session.user_id).first()
+    
+    if user is None:
+      raise web.seeother(self.event.urlEncode())
+    
+    confirmation = dbs.query(Confirmation).filter(
+      Confirmation.event == self.event,
+      Confirmation.user == user
+    ).first()
+    
+    if confirmation is not None:
+      raise web.seeother(self.event.urlEncode())
+    
+    confirmation = Confirmation(
+      event = dbs.query(Event).filter(Event.id==self.event.id).first(),
+      user = user,
+      checked = False
+    )
+    
+    dbs.add(confirmation)
+    dbs.commit()
+    
+    raise web.seeother(self.event.urlEncode())
+    
+class UserConfirmationHandler:
+  pass
 
 class UserController:
-  
   user = User()
   
   def GET(self):
     ToolbarHandler().load()
-    return render.user(self.user,"", render)
+    return render.userPage(self.user,"", render)
 
 
 class BusinessController:
-  
   business = Business()
   
   def GET(self):

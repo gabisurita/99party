@@ -39,6 +39,8 @@ class Business(Schema):
   address = Column('address', String)
   tel = Column('tel', String)
   
+  def urlEncode(self):
+    return str("/empresas/%s" % self.name.lower().replace(" ","_").encode('utf8'))
   
 class Event(Schema):
   __tablename__ = "event"
@@ -52,6 +54,10 @@ class Event(Schema):
   description = Column('description', String)
   location = Column('location', String)
   picture = Column('picture', String)
+  
+  def urlEncode(self):
+    return str("/eventos/%s" % self.name.lower().replace(" ","_").encode('utf8'))
+  
   
   
 class Confirmation(Schema):

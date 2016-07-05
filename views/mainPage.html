@@ -14,6 +14,9 @@ $def with (inst, warn, render)
     <div class="container">
       $if render.business is not None:
         <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/criar_evento"> &nbsp; Criar evento </a></p>
+      $else:
+        <p> </p>
+      
     </div>
     $:render.footer(render)
   </body>
