@@ -1,0 +1,26 @@
+$def with (inst, warn, render)
+
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle</title>
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Fixed navbar -->
+    $:render.toolbar(render)
+    <!-- Begin page content -->
+    <div class="container">
+      $for el in render.businessesSearch:
+        <h3>$el.name</h3>
+      $for el in render.eventsSearch:
+        <h3>$el.name</h3>
+      
+    </div>
+    $:render.footer(render)
+  </body>
+</html>
+
+
+

@@ -356,10 +356,23 @@ class BusinessController:
     return render.businessPage(self.business,"",render)
 
   
-class EventSearchController:
+class SearchController:
   def GET(self):
     ToolbarHandler().load()
     return "Hi!"
+
+  def POST(self):
+    ToolbarHandler().load()
+    
+    search=postParse(web.data())["search"]
+
+    render.eventsSearch = [el for el in render.events if 
+      search in el.name or search in str(el.description)
+    ]
+    render.businessesSearch = [el for el in render.businesses if search in el.name]
+    
+    return render.searchPage(None, "",render)
+
 
 
 class UploadHandler:

@@ -10,7 +10,7 @@ map(LogoutController, "/logout")
 map(UserRegisterController, "/registrar")
 map(BusinessRegisterController, "/registrar_empresa")
 map(EventCreatorController, "/criar_evento")
-map(EventSearchController, "/busca")
+map(SearchController, "/busca")
 
 dbs = sessionmaker(bind=db)()
 
