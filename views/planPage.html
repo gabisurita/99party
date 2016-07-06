@@ -1,0 +1,34 @@
+$def with (inst, warn, render)
+
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle</title>
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Fixed navbar -->
+    $:render.toolbar(render)
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="col-sm-4">
+        <form method="POST" action="">
+          $for el in render.plans:
+            <label class="radio-inline">
+              $if render.user is not None:
+                $if el.id == render.user.plan.id:
+                  <input type="radio" name="plan" value="$el.id" checked="checked"> $el.name <br>
+                $else:
+                  <input type="radio" name="plan" value="$el.id"> $el.name <br>
+              $else:
+                <input type="radio" name="plan" value="$el.id"> $el.name <br>
+            </label>
+          <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
+        </form>
+      </div>
+    </div>
+    $:render.footer(render)
+  </body>
+</html>
+

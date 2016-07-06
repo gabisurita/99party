@@ -336,7 +336,6 @@ class UserConfirmationHandler:
     raise web.seeother(self.event.urlEncode())
 
 
-
 class UserController:
   user = User()
   
@@ -378,6 +377,37 @@ class SearchController:
     
     return render.searchPage(None, "",render)
 
+class UserPlanController:
+  user = User()
+  
+  def GET(self):
+
+    dbs = sessionmaker(bind=db)() 
+    render.plans = dbs.query(Plan)
+    ToolbarHandler().load()
+    
+    return render.planPage(None,"", render)
+  
+  def POST(self):
+    dbs = sessionmaker(bind=db)() 
+    
+    user = dbs.query(User).filter(User.id==session.user_id).first()
+    business = dbs.query(Business).filter(Business.id==session.user_id).first()
+
+    if business is not None:
+      return render.planPage(None,"Inválido para empresas", render)
+
+    if user is None:
+      raise web.seeother("/registrar")
+
+    business = dbs.query(Business).filter(Business.id==session.user_id).first()
+    
+    plan = postParse(web.data())["plan"]
+    
+    user.plan_id =plan
+    dbs.commit()
+    
+    raise web.seeother("/planos")
 
 
 class UploadHandler:

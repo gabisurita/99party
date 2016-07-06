@@ -16,7 +16,16 @@ class Login(Schema):
   email = Column('email', String, unique=True)
   password = Column('password', String)
   valid = Column('valid', Boolean)
+
+
+class Plan(Schema):
+  __tablename__ = "plan"
   
+  id = Column('id', Integer, primary_key=True)
+  name = Column('name', String)
+  description = Column('description', String, default="")
+  picture = Column('picture', String)
+
   
 class User(Schema):
   __tablename__ = "user"
@@ -27,6 +36,9 @@ class User(Schema):
   name = Column('name', String)
   cpf = Column('cpf', String(11), unique=True)
   tel = Column('tel', String)
+  
+  plan_id = Column('plan_id', ForeignKey('plan.id'), primary_key=True)
+  plan = relationship(Plan)
   
   def urlEncode(self):
     return str("/clientes/%s" % self.name.lower().replace(" ","_").encode('utf8'))
@@ -70,12 +82,10 @@ class Confirmation(Schema):
   
   eventId = Column('event_id', ForeignKey('event.id'))
   event = relationship(Event)
-
   userId = Column('user_id', ForeignKey('user.id'))
   user = relationship(User)
-  
   checked = Column('checked', Boolean)
-  
+
 
 def createDB():
   Schema.metadata.create_all(db)

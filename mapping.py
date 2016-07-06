@@ -11,6 +11,7 @@ map(UserRegisterController, "/registrar")
 map(BusinessRegisterController, "/registrar_empresa")
 map(EventCreatorController, "/criar_evento")
 map(SearchController, "/busca")
+map(UserPlanController, "/planos")
 
 dbs = sessionmaker(bind=db)()
 
