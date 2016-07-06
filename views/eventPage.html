@@ -17,7 +17,7 @@ $def with (inst, warn, render)
       <h4>$inst.location</h4>
       <p>$inst.description</p>
       $if render.user is not None:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/$inst.urlEncode()/participar"> &nbsp; Confirmar presença </a></p>
+        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="$inst.urlEncode()/participar"> &nbsp; Confirmar presença </a></p>
       $if render.business is not None:
         $if render.business.id == inst.creator.id:
           <h2> Clientes Inscritos: </h2>
