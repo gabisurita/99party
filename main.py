@@ -117,7 +117,7 @@ class UserRegisterController:
     newLogin = Login(
       email = self.form['email'].value,
       password = self.form['password'].value.encode('base64'),
-      valid = True
+      valid = True,
     )
     
     dbs.add(newLogin)
@@ -126,6 +126,7 @@ class UserRegisterController:
     login = dbs.query(Login).filter(Login.email == newLogin.email).first()
     
     newUser = User(
+      plan_id = 1,
       login = login,
       name = self.form['name'].value,
       cpf = self.form['cpf'].value,
