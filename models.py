@@ -28,6 +28,10 @@ class User(Schema):
   cpf = Column('cpf', String(11), unique=True)
   tel = Column('tel', String)
   
+  def urlEncode(self):
+    return str("/clientes/%s" % self.name.lower().replace(" ","_").encode('utf8'))
+  
+  
   
 class Business(Schema):
   __tablename__ = "business"

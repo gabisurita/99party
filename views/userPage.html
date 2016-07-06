@@ -1,0 +1,29 @@
+$def with (inst, warn, render)
+
+<html>
+  <head>
+    $:render.includes()
+    <title>$BaseTitle</title>
+  </head>
+  <body>
+    $if warn != "":
+      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+    <!-- Fixed navbar -->
+    $:render.toolbar(render)
+    <!-- Begin page content -->
+    <div class="container">
+      <h2>$inst.name</h2>
+      <br>
+      $if render.user is not None:
+        $if inst.id == render.user.id:
+          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="editar"> &nbsp; Editar </a></p>
+      <br>
+      <h3>Eventos</h3>
+      $for el in inst.confirmed:
+        <li><a href="$el.event.urlEncode()">$el.event.name</a></li>
+
+
+    </div>
+    $:render.footer(render)
+  </body>
+</html>

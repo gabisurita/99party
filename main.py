@@ -221,6 +221,7 @@ class LogoutController:
     session.user_id = False
     raise web.seeother('/')
 
+
 class EventCreatorController:
   form = web.form.Form(
     web.form.Textbox('name', web.form.notnull),
@@ -340,6 +341,10 @@ class UserController:
   user = User()
   
   def GET(self):
+  
+    dbs = sessionmaker(bind=db)() 
+    self.user.confirmed = dbs.query(Confirmation).filter(Confirmation.user == self.user)
+    
     ToolbarHandler().load()
     return render.userPage(self.user,"", render)
 

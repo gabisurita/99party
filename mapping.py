@@ -15,7 +15,8 @@ map(SearchController, "/busca")
 dbs = sessionmaker(bind=db)()
 
 events = dbs.query(Event)
-business = dbs.query(Business)
+businesses = dbs.query(Business)
+users = dbs.query(User)
 
 for el in events:
   map(
@@ -36,9 +37,16 @@ for el in events:
     dict(event=el)
   )
 
-for el in business:
+for el in businesses:
   map(
     BusinessController, 
     el.urlEncode(),
     dict(business=el)
+  )
+
+for el in users:
+  map(
+    UserController, 
+    el.urlEncode(),
+    dict(user=el)
   )
