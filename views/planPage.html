@@ -12,23 +12,74 @@ $def with (inst, warn, render)
     $:render.toolbar(render)
     <!-- Begin page content -->
     <div class="container">
-      <div class="col-sm-4">
-        <form method="POST" action="">
-          $for el in render.plans:
-            <label class="radio-inline">
-              $if render.user is not None:
-                $if el.id == render.user.plan.id:
-                  <input type="radio" name="plan" value="$el.id" checked="checked"> $el.name <br>
-                $else:
-                  <input type="radio" name="plan" value="$el.id"> $el.name <br>
-              $else:
-                <input type="radio" name="plan" value="$el.id"> $el.name <br>
-            </label>
-          <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
+      <div class="col-sm-4">    
+        <form method="POST" action="/planos">
+          <label class="radio-inline">
+            <input type="hidden" name="plan" value="1"> 
+          </label>
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Free</h1>
+            </div>
+            <div class="panel-body">
+              <p> Desconto na entrada </p>
+              <p> Entradas sem fila </p>
+            </div>
+            <div class="panel-footer">
+              <h3 style="color:#550000">Grátis</h3>
+              <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
+            </div>
+          </div>  
+        </form>
+      </div>
+      <div class="col-sm-4">    
+        <form method="POST" action="/planos">
+          <label class="radio-inline">
+            <input type="hidden" name="plan" value="2"> 
+          </label>
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Silver</h1>
+            </div>
+            <div class="panel-body">
+              <p> Entradas gratuítas </p>
+              <p> Descontos em bebidas</p>
+              <p> Entradas sem fila </p>
+            </div>
+            <div class="panel-footer">
+              <h3 style="color:#550000">R$19,90</h3>
+              <h4>por  mês</h4>
+              <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
+            </div>
+          </div>  
+        </form>
+      </div>
+      <div class="col-sm-4">    
+        <form method="POST" action="/planos">
+          <label class="radio-inline">
+            <input type="hidden" name="plan" value="3"> 
+          </label>
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Gold</h1>
+            </div>
+            <div class="panel-body">
+              <p> Entradas gratuítas </p>
+              <p> Bebidas gratuítas </p>
+              <p> Entradas sem fila </p>
+              <p> Acesso a camarotes </p>
+            </div>  
+            <div class="panel-footer">
+              <h3 style="color:#550000">R$39,90</h3>
+              <h4>por  mês</h4>
+              <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
+            </div>
+          </div>  
         </form>
       </div>
     </div>
     $:render.footer(render)
   </body>
 </html>
+
 
