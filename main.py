@@ -107,12 +107,12 @@ class UserRegisterController:
     cpf = re.search(r'[0-9]{11}', self.form['cpf'].value)
     
     if email is None:
-      return Render.register(self.form,"E-mail inválido.", Render)
+      return render.register(self.form,"E-mail inválido.", render)
     if cpf is None:
-      return Render.register(self.form,"CPF inválido.", Render)
+      return render.register(self.form,"CPF inválido.", render)
     
     if self.form['password'].value != self.form['confirmation'].value:
-      return Render.register(self.form,"Senhas não correspondem.", Render)
+      return render.register(self.form,"Senhas não correspondem.", render)
     
     newLogin = Login(
       email = self.form['email'].value,
@@ -126,15 +126,23 @@ class UserRegisterController:
     login = dbs.query(Login).filter(Login.email == newLogin.email).first()
     
     newUser = User(
-      plan_id = 1,
       login = login,
       name = self.form['name'].value,
       cpf = self.form['cpf'].value,
       tel = self.form['tel'].value,
+      plan_id = 1
     )
     
     dbs.add(newUser)
     dbs.commit()
+    
+    user = dbs.query(User).filter(User.id == login.id).first()
+    
+    map(
+      UserController, 
+      user.urlEncode(),
+      dict(user=user)
+    )
     
     session.user_id = login.id
     raise web.seeother('/')
@@ -183,12 +191,12 @@ class BusinessRegisterController:
     cnpj = re.search(r'[0-9]{14}', self.form['cnpj'].value)
     
     if email is None:
-      return Render.register(self.form,"E-mail inválido.", Render)
+      return render.register(self.form,"E-mail inválido.", render)
     if cnpj is None:
-      return Render.register(self.form,"CNPJ inválido.", Render)
+      return render.register(self.form,"CNPJ inválido.", render)
     
     if self.form['password'].value != self.form['confirmation'].value:
-      return Render.register(self.form,"Senhas não correspondem.", Render)
+      return render.register(self.form,"Senhas não correspondem.", render)
     
    #TODO Turn false
     newLogin = Login(
@@ -212,6 +220,14 @@ class BusinessRegisterController:
     
     dbs.add(newBusiness)
     dbs.commit()
+    
+    business = dbs.query(Business).filter(Business.id == login.id).first()
+    
+    map(
+      BusinessController, 
+      business.urlEncode(),
+      dict(business=business)
+    )
     
     session.user_id = login.id
     raise web.seeother('/')
@@ -277,6 +293,29 @@ class EventCreatorController:
     
     dbs.add(newEvent)
     dbs.commit()
+
+    event = dbs.query(Event).filter(Event.name == newEvent.name).first()
+    
+    map(
+      EventController, 
+      event.urlEncode(),
+      dict(event=event)
+    )
+  
+    map(
+      EventConfirmationHandler, 
+      event.urlEncode()+"/participar",
+      dict(event=event)
+    )
+  
+    map(
+      UserConfirmationHandler, 
+      event.urlEncode()+"/confirmar",
+      dict(event=event)
+    )
+
+    
+    
     raise web.seeother('/')
   
   
