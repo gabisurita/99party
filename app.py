@@ -14,6 +14,12 @@ BaseDir = "."
 BaseTitle = "99 Party"
 StaticDirs = ["static"]
 
+# Initialize mailing features
+web.config.smtp_server = 'smtp.gmail.com'
+web.config.smtp_port = 587
+web.config.smtp_username = '99partyadm@gmail.com'
+web.config.smtp_password = '99gudwin'
+web.config.smtp_starttls = True
 
 # Render the layouts
 render = web.template.render(BaseDir+'/views/',cache=False, globals=globals())

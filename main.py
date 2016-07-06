@@ -222,6 +222,25 @@ class LogoutController:
     raise web.seeother('/')
 
 
+class ForgotPasswordHandler:
+  def GET(self):
+    pass
+  def POST(self):
+    web.sendmail(
+      web.config.smtp_username, 
+      str(Form['E-mail'].value),
+      '99Party - Esqueci minha senha',
+      'Mensagem'
+    )
+
+
+class ResetPasswordController:
+  def GET(self):
+    pass
+  def POST(self):
+    pass
+
+
 class EventCreatorController:
   form = web.form.Form(
     web.form.Textbox('name', web.form.notnull),
@@ -259,6 +278,7 @@ class EventCreatorController:
     dbs.commit()
     raise web.seeother('/')
   
+  
 class EventController:
   event = Event()
   
@@ -270,6 +290,7 @@ class EventController:
     self.event.confirmations = dbs.query(Confirmation).filter(Confirmation.event == self.event)
     
     return render.eventPage(self.event,"", render)
+    
     
 class EventConfirmationHandler:
   event = Event()
@@ -300,6 +321,7 @@ class EventConfirmationHandler:
     dbs.commit()
     
     raise web.seeother(self.event.urlEncode())
+    
     
 class UserConfirmationHandler:
   event = Event()
