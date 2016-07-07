@@ -13,6 +13,9 @@ $def with (inst, warn, render)
     <!-- Begin page content -->
     <div class="container">
       <div class="col-lg-3">
+        <div class="thumbnail">
+          <img src="$inst.picture">
+        </div>
       </div>
       <div class="col-lg-6"
         <h5>$inst.date.strftime("%d/%m %H:%M")</h5>
@@ -42,6 +45,8 @@ $def with (inst, warn, render)
                   </div>
                 </form>
               </div>
+      
+
       </div>
     </div>
     $:render.footer(render)
