@@ -7,36 +7,42 @@ $def with (inst, warn, render)
   </head>
   <body>
     $if warn != "":
-      <script>BootstrapDialog.show({type: BootstrapDialog.TYPE_DANGER, size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+      <script>BootstrapDialog.show({ size: BootstrapDialog.SIZE_SMALL, title: 'Presença confirmada!', message: '$:warn' });</script>
     <!-- Fixed navbar -->
     $:render.toolbar(render)
     <!-- Begin page content -->
     <div class="container">
-      <h2>$inst.name</h2>
-      <h4>$inst.date</h4>
-      <h4>$inst.location</h4>
-      <p>$inst.description</p>
-      $if render.user is not None:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="$inst.urlEncode()/participar"> &nbsp; Confirmar presença </a></p>
-      $if render.business is not None:
-        $if render.business.id == inst.creator.id:
-          <h2> Clientes Inscritos: </h2>
-          $for el in inst.confirmations:
-            <div class="col-sm-4">
-              <form class="form" method="POST" action="$inst.urlEncode()/confirmar">
-                <label for="user_id" class="sr-only">User id</label>
-                <input type="hidden" name="user_id" value="$el.user.id">
-                <div class="col-sm-6">
-                  <h4>$el.user.name</h4>
-                </div>
-                <div class="col-sm-6">
-                  $if not el.checked:
-                    <button class="btn btn-primary btn-block" type="submit">Confirmar</button>
-                  $else:
-                    <button class="btn btn-primary btn-block" type="submit" disabled>Confirmado</button>
-                </div>
-              </form>
-            </div>
+      <div class="col-lg-3">
+      </div>
+      <div class="col-lg-6"
+        <h5>$inst.date.strftime("%d/%m %H:%M")</h5>
+        <h2>$inst.name</h2>
+        
+        <p>Por <a href="$inst.creator.urlEncode()">$inst.creator.name</a></p>
+        <p>$inst.location</p>
+        <p>$inst.description</p>
+        $if render.user is not None:
+          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="$inst.urlEncode()/participar"> &nbsp; Confirmar presença </a></p>
+        $if render.business is not None:
+          $if render.business.id == inst.creator.id:
+            <h2> Clientes Inscritos: </h2>
+            $for el in inst.confirmations:
+              <div class="col-sm-8">
+                <form class="form" method="POST" action="$inst.urlEncode()/confirmar">
+                  <label for="user_id" class="sr-only">User id</label>
+                  <input type="hidden" name="user_id" value="$el.user.id">
+                  <div class="col-sm-6">
+                    <h4>$el.user.name</h4>
+                  </div>
+                  <div class="col-sm-6">
+                    $if not el.checked:
+                      <button class="btn btn-primary btn-block" type="submit">Confirmar</button>
+                    $else:
+                      <button class="btn btn-primary btn-block" type="submit" disabled>Confirmado</button>
+                  </div>
+                </form>
+              </div>
+      </div>
     </div>
     $:render.footer(render)
   </body>

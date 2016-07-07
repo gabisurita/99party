@@ -16,12 +16,14 @@ $def with (inst, warn, render)
       <h4>$inst.address</h4>
       <h4>$inst.tel</h4>
       <br>
-      $if render.business.id == inst.id:
-        <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="editar"> &nbsp; Editar </a></p>
-      <br>
+      $if render.business is not None:
+        $if render.business.id == inst.id:
+          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="editar"> &nbsp; Editar </a></p>
+          <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/criar_evento"> &nbsp; Criar evento </a></p>
+        <br>
       <h3>Eventos</h3>
       $for el in inst.events:
-        <li><a href="eventos/$el.name">$el.name</a></li>
+        <li><a href="$el.urlEncode()">$el.name</a></li>
 
 
     </div>

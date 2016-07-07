@@ -18,11 +18,22 @@ $def with (inst, warn, render)
         $if inst.id == render.user.id:
           <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="editar"> &nbsp; Editar </a></p>
       <br>
-      <h3>Eventos</h3>
-      $for el in inst.confirmed:
-        <li><a href="$el.event.urlEncode()">$el.event.name</a></li>
-
-
+      <div class="row">
+        <h3> Meus eventos: </h3>
+          $for i in inst.confirmed:
+            <div class="col-sm-3">
+              <a href="$i.event.urlEncode()">
+                <div class="thumbnail">
+                  <img src="$i.event.picture" alt="...">
+                  <div class="caption">
+                    <h3>$i.event.name</h3>
+                    <h5>$i.event.date</h5>
+                    <p>$i.event.description</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+         </div>
     </div>
     $:render.footer(render)
   </body>

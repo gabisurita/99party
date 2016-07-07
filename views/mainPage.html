@@ -11,7 +11,42 @@ $def with (inst, warn, render)
     <!-- Fixed navbar -->
     $:render.toolbar(render)
     <!-- Begin page content -->
+
     <div class="container">
+       
+      $if render.business is None and render.user is None:
+        <div class="row">
+          <div class="col-sm-3">
+          </div>
+          <div class="col-sm-6">
+            <div class="jumbotron">
+              <h3>Onde você quer se divertir hoje?</h3>
+              <p>Registre-se hoje e comece a economizar e se divertir mais!</p>
+              <a class="btn btn-primary btn-lg" href="/registrar" role="button">Registrar</a>
+            </div>
+          </div>
+          <div class="col-sm-3">
+          </div>
+        </div>
+      <div class="row">
+        <h3> Eventos em destaque: </h3>
+        $for i in range(min(4,render.events.count())):
+          <div class="col-sm-3">
+            <a href="$render.events[i].urlEncode()">
+              <div class="thumbnail">
+                <img src="$render.events[i].picture" alt="...">
+                <div class="caption">
+                  <h3>$render.events[i].name</h3>
+                  <h5>$render.events[i].date.strftime("%d/%m %H:%M")</h5>
+                  
+                  </a>
+                  <p>Por <a href="$render.events[i].creator.urlEncode()">$render.events[i].creator.name</a></p>
+                  <p>$render.events[i].description</p>
+                </div>
+              </div>
+          </div>
+      </div>
+      
       $if render.business is not None:
         <p> <i class="fa fa-user-plus fa-lg"></i> <a class="black-link" href="/criar_evento"> &nbsp; Criar evento </a></p>
       $else:

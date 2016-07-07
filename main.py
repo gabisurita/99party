@@ -269,7 +269,7 @@ class EventCreatorController:
   
   def GET(self):
     ToolbarHandler().load()
-    return render.newEvent(form,"",render)
+    return render.newEvent(self.form,"",render)
   
   def POST(self):
     dbs = sessionmaker(bind=db)()
@@ -336,6 +336,7 @@ class EventConfirmationHandler:
   event = Event()
   
   def GET(self):
+    ToolbarHandler().load()
     dbs = sessionmaker(bind=db)()
     
     user = dbs.query(User).filter(User.id==session.user_id).first()
@@ -349,7 +350,7 @@ class EventConfirmationHandler:
     ).first()
     
     if confirmation is not None:
-      raise web.seeother(self.event.urlEncode())
+      return render.eventPage(self.event,"Presença confirmada! Apresente um documento de indentificação na entrada.", render)
     
     confirmation = Confirmation(
       event = dbs.query(Event).filter(Event.id==self.event.id).first(),
@@ -360,7 +361,7 @@ class EventConfirmationHandler:
     dbs.add(confirmation)
     dbs.commit()
     
-    raise web.seeother(self.event.urlEncode())
+    return render.eventPage(self.event,"Apresente um documento de indentificação na entrada.", render)
     
     
 class UserConfirmationHandler:
@@ -452,6 +453,8 @@ class UserPlanController:
   
   def POST(self):
     dbs = sessionmaker(bind=db)() 
+    ToolbarHandler().load()
+    
     
     user = dbs.query(User).filter(User.id==session.user_id).first()
     business = dbs.query(Business).filter(Business.id==session.user_id).first()
@@ -469,7 +472,7 @@ class UserPlanController:
     user.plan_id =plan
     dbs.commit()
     
-    raise web.seeother("/planos")
+    return render.planPage(None,"Plano contratado! Aguardando pagamento.", render)
 
 
 class UploadHandler:

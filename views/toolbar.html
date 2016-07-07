@@ -18,9 +18,11 @@ $def with (render)
         </div>
       </form>
       <ul class="nav navbar-nav">
-        <li><a href="/planos">Planos</a></li>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/planos">Sobre</a></li>
+        <li><a href="/planos">Planos</a></li>
         $if render.user is not None:
           <li><a href="$render.user.urlEncode()"> $render.user.name</a></li>
           <li><a href="/logout">Log Out &nbsp; <i class="fa fa-sign-out"></i></a></li>
