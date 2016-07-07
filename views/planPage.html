@@ -7,7 +7,7 @@ $def with (inst, warn, render)
   </head>
   <body>
     $if warn != "":
-      <script>BootstrapDialog.show({ size: BootstrapDialog.SIZE_SMALL, title: 'Erro', message: '$:warn' });</script>
+      <script>BootstrapDialog.show({ size: BootstrapDialog.SIZE_SMALL, title: 'Troca Efetuada', message: '$:warn' });</script>
     <!-- Fixed navbar -->
     $:render.toolbar(render)
     <!-- Begin page content -->
@@ -47,7 +47,7 @@ $def with (inst, warn, render)
               <p> Entradas sem fila </p>
             </div>
             <div class="panel-footer">
-              <h3 style="color:#550000">R$19,90</h3>
+              <h3 style="color:#550000">R$$19,90</h3>
               <h4>por  mês</h4>
               <button class="btn btn-primary btn-block" type="submit">Contratar plano</button>
             </div>

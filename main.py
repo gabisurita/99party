@@ -472,7 +472,7 @@ class UserPlanController:
     user.plan_id =plan
     dbs.commit()
     
-    return render.planPage(None,"Plano contratado! Aguardando pagamento.", render)
+    return render.planPage(None,"Aguardando pagamento.", render)
 
 
 class UploadHandler:
